@@ -14,4 +14,11 @@ class BitcoinExchange {
 		BitcoinExchange( const BitcoinExchange &copy );
 		BitcoinExchange &operator=( const BitcoinExchange &assign );
 		~BitcoinExchange( void );
+
+		void save( std::string date, std::string value);
+		// void pop( std::string const date );
+		
 };
+
+bool validDate( std::string date );
+bool validPrice( std::string price );

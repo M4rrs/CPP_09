@@ -5,7 +5,7 @@ static int getData( BitcoinExchange &btc ) {
 	std::string line;
 
 	std::string date;
-	float value;
+	std::string value;
 
 	file.open("data.csv", std::fstream::in);
 	if (!file.is_open()) {
@@ -15,11 +15,22 @@ static int getData( BitcoinExchange &btc ) {
 	std::getline(file, line);
 	while (std::getline(file, line)) {
 		date = line.substr(0, 10);
+		try {
+			value = line.substr(line.find(",") + 1);
+		}
+		catch ( std::out_of_range &e ) {
+			std::cerr << "No value found." << std::endl;
+			continue;
+		}
+		if (validDate(date) || validPrice(value))
+			btc.save(date, value);
 	}
+	file.close();
+	return 0;
 }
 
 static int parseData( BitcoinExchange &btc, char *filename ) {
-
+	
 }
 
 int main( int ac, char **av ) {
