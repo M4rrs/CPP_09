@@ -16,6 +16,7 @@ class BitcoinExchange {
 		~BitcoinExchange( void );
 
 		void save( std::string date, std::string value);
+		void calculatePrice( std::string date, std::string price );
 		// void pop( std::string const date );
 		
 };

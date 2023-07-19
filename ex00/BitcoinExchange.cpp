@@ -31,10 +31,3 @@ BitcoinExchange &BitcoinExchange::operator=( const BitcoinExchange &assign ) {
 void	BitcoinExchange::save( std::string date, std::string price ) {
 	this->_data.insert({date, atof(price.c_str())});
 }
-
-// void	BitcoinExchange::pop( std::string date ) {
-// 	if (!validDate(date))
-// 		return ;
-
-// 	this->_data.erase(date);
-// }

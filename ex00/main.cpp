@@ -19,10 +19,10 @@ static int getData( BitcoinExchange &btc ) {
 			value = line.substr(line.find(",") + 1);
 		}
 		catch ( std::out_of_range &e ) {
-			std::cerr << "No value found." << std::endl;
+			std::cerr << "Error: No value found." << std::endl;
 			continue;
 		}
-		if (validDate(date) || validPrice(value))
+		if (validDate(date) && validPrice(value))
 			btc.save(date, value);
 	}
 	file.close();
@@ -30,7 +30,33 @@ static int getData( BitcoinExchange &btc ) {
 }
 
 static int parseData( BitcoinExchange &btc, char *filename ) {
+	std::fstream input;
+	std::string line;
+
+	std::string date;
+	std::string value;
 	
+	input.open(filename, std::fstream::in);
+	if (!input.is_open()) {
+		std::cerr << "Error: Input file could not be opened." << std::endl;
+		return 1;
+	}
+
+	std::getline(input, line);
+	while (std::getline(input, line)) {
+		date = line.substr(0, 10);
+		try {
+			value = line.substr(line.find("|") + 2);
+		}
+		catch ( std::out_of_range &e ) {
+			std::cerr << "Error: No value found." << std::endl;
+			continue;
+		}
+
+		if (validDate(date) && validPrice(value))
+			btc.calculatePrice(date, value);
+	}
+
 }
 
 int main( int ac, char **av ) {
