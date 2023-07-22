@@ -1,9 +1,14 @@
-#pragma
+#pragma once
 
 #include <iostream>
 #include <map>
 #include <fstream>
 #include <algorithm>
+#include <string>
+#include <limits>
+
+#define CYAN "\033[36;1m"
+#define RESET "\033[0m"
 
 class BitcoinExchange {
 	private:
@@ -16,8 +21,7 @@ class BitcoinExchange {
 		~BitcoinExchange( void );
 
 		void save( std::string date, std::string value);
-		void calculatePrice( std::string date, std::string price );
-		// void pop( std::string const date );
+		void calculatePrice( std::string date, float price );
 		
 };
 

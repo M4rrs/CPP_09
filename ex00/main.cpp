@@ -54,9 +54,10 @@ static int parseData( BitcoinExchange &btc, char *filename ) {
 		}
 
 		if (validDate(date) && validPrice(value))
-			btc.calculatePrice(date, value);
+			btc.calculatePrice(date, std::stof(value));
 	}
-
+	input.close();
+	return 0;
 }
 
 int main( int ac, char **av ) {
