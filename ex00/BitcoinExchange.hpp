@@ -5,7 +5,7 @@
 #include <fstream>
 #include <algorithm>
 #include <string>
-#include <limits>
+#include <climits>
 
 #define CYAN "\033[36;1m"
 #define RESET "\033[0m"

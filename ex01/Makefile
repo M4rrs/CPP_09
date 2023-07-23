@@ -6,19 +6,19 @@
 #    By: m4rrs <m4rrs@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/14 14:22:32 by nnorazma          #+#    #+#              #
-#    Updated: 2023/07/23 20:31:54 by m4rrs            ###   ########.fr        #
+#    Updated: 2023/07/23 22:53:16 by m4rrs            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = btc
+NAME = RPN
 
 CC = c++
 FLAGS = -Wall -Werror -Wextra  -I -std=c++98 -fsanitize=address
 
 RM = rm -rf
 
-SRCS = main.cpp BitcoinExchange.cpp
-INC = BitcoinExchange.hpp
+SRCS = main.cpp RPN.cpp
+INC = RPN.hpp
 
 OBJS = ${SRCS:%.cpp=%.o}
 
@@ -29,7 +29,7 @@ OBJS = ${SRCS:%.cpp=%.o}
 all: ${NAME}
 
 ${NAME}: ${OBJS}
-		@echo "\n\033[38;5;204mBitcoin Exchange\033[0m"
+		@echo "\n\033[38;5;204mWho thought reverse polish notation was a good idea?\033[0m"
 		@${CC} ${FLAGS} ${OBJS} -o $@
 
 clean:
