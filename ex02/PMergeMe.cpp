@@ -84,6 +84,35 @@ Pair storePairs( C cont ) {
 	return (resultCont);
 }
 
+/*========================= INSERTION SORT =============================*/
+
+void insertion( std::vector< std::pair<int, int> > &pairs, int size ) {
+	if (size == 1)
+		return ;
+
+	insertion(pairs, size - 1);
+
+	std::pair<int, int> lastEle = pairs[size - 1];
+	int i = size - 2;
+
+	while (i >= 0 && pairs[i].second > lastEle.second) {
+		pairs[i + 1] = pairs[i];
+		i--;
+	}
+
+	pairs[i + 1] = lastEle;
+}
+
+void insertion( std::list< std::pair<int, int> > &pairs, int size ) {
+
+}
+
+/*========================= MERGE SORT =============================*/
+
+void merge() {
+	
+}
+
 void PMergeMe::algoVec( void ) {
 	int remain;
 	std::vector< std::pair<int, int> > pairs;
@@ -94,6 +123,8 @@ void PMergeMe::algoVec( void ) {
 	}
 
 	pairs = storePairs< std::vector< std::pair<int, int> >, std::vector<int> >(_vec);
+	insertion(pairs, pairs.size());
+	merge();
 }
 
 void PMergeMe::algoList( void ) {
