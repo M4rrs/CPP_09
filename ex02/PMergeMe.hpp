@@ -15,7 +15,7 @@ class PMergeMe {
 		int _range;
 		float _timeList;
 		float _timeVec;
-
+		bool _odd;
 		PMergeMe( void );
 
 	public:
@@ -23,4 +23,9 @@ class PMergeMe {
 		PMergeMe( const PMergeMe &copy );
 		PMergeMe &operator=( const PMergeMe &assign );
 		~PMergeMe( void );
+
+		void parity( void );
+
+		void algoVec( void );
+		void algoList( void );
 };
