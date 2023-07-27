@@ -33,8 +33,9 @@ void checkDup( T cont ) {
 	}
 }
 
+// Simple sets to odd or even.
 void PMergeMe::parity( void ) {
-	if ((_vec.size() % 2) && (_list.size() % 2))
+	if ((_vec.size() % 2) == 1 || (_list.size() % 2) == 1)
 		_odd = true;
 	else
 		_odd = false;
@@ -121,7 +122,6 @@ Pair storePairs( C cont ) {
 	Pair resultCont;
 
 	for (it = cont.begin(); it != cont.end(); it++) {
-		std::cout << "\033[36;1mProblem here?\033[0m" << std::endl;
 		std::pair<int, int> pair;
 
 		num1 = *it;
@@ -277,6 +277,7 @@ void PMergeMe::algoVec( void ) {
 	std::vector<int> pend;
 	std::vector<int> S;
 
+	parity();
 	if (_odd) {
 		remain = _vec.back();
 		_vec.pop_back();
@@ -297,6 +298,9 @@ void PMergeMe::algoVec( void ) {
 	_vec.clear();
 	_vec = S;
 
+	std::vector<int>::iterator it;
+	for (it = _vec.begin(); it != _vec.end(); it++)
+		std::cout << *it << std::endl;
 	if (!std::is_sorted(_vec.begin(), _vec.end()))
 		throw std::logic_error("Vector sort failed.");
 }
@@ -307,6 +311,7 @@ void PMergeMe::algoList( void ) {
 	std::list<int> pend;
 	std::list<int> S;
 
+	parity();
 	if (_odd) {
 		remain = _vec.back();
 		_vec.pop_back();
@@ -338,12 +343,10 @@ PMergeMe::PMergeMe( std::string arg ) : _before(arg) {
 
 	if (arg.find_first_not_of("0123456789 ") != std::string::npos)
 		throw std::logic_error("Occurence of non-digit values.");
-
-	parity(); //just sets bool to odd or even
 	
 	float start = timeStamp();
 	_vec = store< std::vector<int> >(arg);
-	std::vector<int>::iterator it;
+	// std::vector<int>::iterator it;
 	// for (it = _vec.begin(); it != _vec.end(); it++)
 	// 	std::cout << *it << std::endl;
 	algoVec();
@@ -358,3 +361,5 @@ PMergeMe::PMergeMe( std::string arg ) : _before(arg) {
 
 	printResults();
 }
+
+// std::cout << "\033[36;1mProblem here?\033[0m" << std::endl;
