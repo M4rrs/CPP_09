@@ -5,6 +5,7 @@
 #include <iostream>
 #include <algorithm>
 #include <sstream>
+#include <sys/time.h>
 
 class PMergeMe {
 	private:
@@ -25,7 +26,7 @@ class PMergeMe {
 		~PMergeMe( void );
 
 		void parity( void );
-
+		void printResults( void );
 		void algoVec( void );
 		void algoList( void );
 };
