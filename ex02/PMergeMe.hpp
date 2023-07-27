@@ -6,6 +6,10 @@
 #include <algorithm>
 #include <sstream>
 #include <sys/time.h>
+#include <iomanip>
+
+#define CYAN "\033[36;1m"
+#define CLEAR "\033[0m"
 
 class PMergeMe {
 	private:

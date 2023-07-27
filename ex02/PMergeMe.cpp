@@ -49,7 +49,7 @@ float timeStamp( void ) {
 }
 
 float elapsedTime( float start ) {
-	return (timeStamp() - start / 1000000.0);
+	return ((timeStamp() - start) / 1000000.0);
 }
 
 void PMergeMe::printResults( void ) {
@@ -57,45 +57,32 @@ void PMergeMe::printResults( void ) {
 	std::vector<int>::iterator vecIt;
 	std::list<int>::iterator listIt;
 
+	std::cout << CYAN << "================================================================================" << CLEAR << std::endl;
 	std::cout << "Before: " << _before << std::endl;
 
+	std::cout << CYAN << "================================================================================" << CLEAR << std::endl;
 	std::cout << "Vector After: ";
-	int count = 0;
 	for (vecIt = _vec.begin(); vecIt != _vec.end(); vecIt++) {
-		if (count < 6) {
-			std::cout << *vecIt;
-			if (std::next(vecIt) != _vec.end())
-				std::cout << " ";
-		}
-		else
-			break;
-		count++;
+		std::cout << *vecIt;
+		if (std::next(vecIt) != _vec.end())
+			std::cout << " ";
 	}
-	if (count == 6 && vecIt != _vec.end())
-		std::cout << "[...]";
 	std::cout << std::endl;
-
+	std::cout << CYAN << "================================================================================" << CLEAR << std::endl;
 	std::cout << "List After: ";
-	count = 0;
 	for (listIt = _list.begin(); listIt != _list.end(); listIt++) {
-		if (count < 6) {
-			std::cout << *listIt;
-			if (std::next(listIt) != _list.end())
-				std::cout << " ";
-		}
-		else
-			break;
-		count++;
+		std::cout << *listIt;
+		if (std::next(listIt) != _list.end())
+			std::cout << " ";
 	}
-	if (count == 6 && listIt != _list.end())
-		std::cout << "[...]";
 	std::cout << std::endl;
 
+	std::cout << CYAN << "================================================================================" << CLEAR << std::endl;
 	std::cout << "Time to process a range of " << _range << " elements with std::vector<int> : "
-			<< _timeVec << "us." << std::endl;
+			<< std::fixed << std::setprecision(5) << _timeVec << " us" << std::endl;
 
 	std::cout << "Time to process a range of " << _range << " elements with std::list<int> : "
-			<< _timeList << "us." << std::endl;
+			<< std::fixed << std::setprecision(5) << _timeList << " us" << std::endl;
 }
 
 /*=============================== STORING ==================================*/
@@ -162,19 +149,23 @@ void insertion( std::vector< std::pair<int, int> > &pairs, int size ) {
 
 /* Okay hear me out I know this looks confusing.*/
 void insertion( std::list< std::pair<int, int> > &pairs, int size ) {
-	std::list< std::pair<int, int> >::iterator left = pairs.begin();
-	left++;
+	std::list< std::pair<int, int> >::iterator current = pairs.begin();
+	std::list< std::pair<int, int> >::iterator sortedEnd = pairs.begin();
 
-	(void)size;
-	for (; left != pairs.end(); left++) {
-		std::pair<int, int> lastEle = *left;
-		std::list< std::pair<int, int> >::iterator right = left;
+	for (int i = 0; i < size; i++) {
+		std::pair<int, int> value = *current;
+		std::list< std::pair<int, int> >::iterator correctPos = pairs.begin();
 
-		while (right != pairs.begin() && std::prev(right)->second > lastEle.second)
-			--right;
+		while (correctPos != current && correctPos->second < value.second)
+			correctPos++;
 
-		pairs.insert(std::next(right), lastEle);
-		pairs.erase(left);
+		if (correctPos != current) {
+			pairs.erase(current);
+			pairs.insert(correctPos, value);
+			current = sortedEnd;
+		}
+		sortedEnd = current;
+		current++;
 	}
 }
 
@@ -198,19 +189,19 @@ void mergeSort( std::vector<int> &pend, std::vector<int> &S ) {
 
 	for (int i = 2; i < pendSize; i++) {
 		int jacob = jacobsthal(i);
-
 		if (jacob > pendSize)
 			break;
+
 		temp.push_back(pend.at(jacob - 1));
 		std::vector<int>::iterator it = std::lower_bound(S.begin(), S.end(), pend.at(jacob - 1));
-		S.insert(S.begin(), (it - S.begin()), pend.at(jacob - 1));
+		S.insert(S.begin() + (it - S.begin()), pend.at(jacob - 1));
 		pend.at(jacob - 1) = -1;
 	}
 
 	for (int i = 0; i < pendSize; i++) {
-		if (i != -1) {
+		if (pend.at(i) != -1) {
 			std::vector<int>::iterator it = std::lower_bound(S.begin(), S.end(), pend.at(i));
-			S.insert(S.begin(), (it - S.begin()), pend.at(i));
+			S.insert(S.begin() + (it - S.begin()), pend.at(i));
 			temp.push_back(pend.at(i));
 		}
 	}
@@ -246,8 +237,8 @@ void mergeSort( std::list<int> &pend, std::list<int> &S ) {
 			for (lower = S.begin(); lower != S.end(); lower++) {
 				if (*lower > *it)
 					break;
-				temp.insert(lower, *it);
 			}	
+			temp.insert(lower, *it);
 		}
 	}
 	pend.clear();
@@ -277,6 +268,7 @@ void PMergeMe::algoVec( void ) {
 	std::vector<int> pend;
 	std::vector<int> S;
 
+	_range = _vec.size();
 	parity();
 	if (_odd) {
 		remain = _vec.back();
@@ -292,15 +284,12 @@ void PMergeMe::algoVec( void ) {
 		if (it == S.end())
 			S.push_back(remain);
 		else
-			S.insert(S.begin(), (it - S.begin()), remain);
+			S.insert(S.begin() + (it - S.begin()), remain);
 	}
 
 	_vec.clear();
 	_vec = S;
 
-	std::vector<int>::iterator it;
-	for (it = _vec.begin(); it != _vec.end(); it++)
-		std::cout << *it << std::endl;
 	if (!std::is_sorted(_vec.begin(), _vec.end()))
 		throw std::logic_error("Vector sort failed.");
 }
@@ -311,10 +300,11 @@ void PMergeMe::algoList( void ) {
 	std::list<int> pend;
 	std::list<int> S;
 
+	_range = _list.size();
 	parity();
 	if (_odd) {
-		remain = _vec.back();
-		_vec.pop_back();
+		remain = _list.back();
+		_list.pop_back();
 	}
 
 	pairs = storePairs< std::list< std::pair<int, int> >, std::list<int> >(_list);
@@ -340,22 +330,18 @@ void PMergeMe::algoList( void ) {
 
 PMergeMe::PMergeMe( std::string arg ) : _before(arg) {
 
-
 	if (arg.find_first_not_of("0123456789 ") != std::string::npos)
 		throw std::logic_error("Occurence of non-digit values.");
 	
 	float start = timeStamp();
 	_vec = store< std::vector<int> >(arg);
-	// std::vector<int>::iterator it;
-	// for (it = _vec.begin(); it != _vec.end(); it++)
-	// 	std::cout << *it << std::endl;
+	if (std::is_sorted(_vec.begin(), _vec.end()))
+		throw std::logic_error("Sequence already sorted.");
 	algoVec();
 	_timeVec = elapsedTime(start);
 
 	start = timeStamp();
 	_list = store< std::list<int> >(arg);
-	// for (it = _list.begin(); it != _list.end(); it++)
-	// 	std::cout << *it << std::endl;
 	algoList();
 	_timeList = elapsedTime(start);
 

@@ -3,14 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nnorazma <nnorazma@student.42.fr>          +#+  +:+       +#+         #
+#    By: m4rrs <m4rrs@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/14 14:22:32 by nnorazma          #+#    #+#              #
-#    Updated: 2023/07/27 17:56:36 by nnorazma         ###   ########.fr        #
+#    Updated: 2023/07/27 23:44:21 by m4rrs            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = PMergeMe
+NAME = PmergeMe
 
 CC = c++
 FLAGS = -Wall -Werror -Wextra  -I -std=c++98 -fsanitize=address
