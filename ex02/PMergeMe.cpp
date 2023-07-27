@@ -121,6 +121,7 @@ Pair storePairs( C cont ) {
 	Pair resultCont;
 
 	for (it = cont.begin(); it != cont.end(); it++) {
+		std::cout << "\033[36;1mProblem here?\033[0m" << std::endl;
 		std::pair<int, int> pair;
 
 		num1 = *it;
@@ -137,7 +138,6 @@ Pair storePairs( C cont ) {
 		
 		resultCont.push_back(pair);
 	}
-	
 	return (resultCont);
 }
 
@@ -343,11 +343,16 @@ PMergeMe::PMergeMe( std::string arg ) : _before(arg) {
 	
 	float start = timeStamp();
 	_vec = store< std::vector<int> >(arg);
+	std::vector<int>::iterator it;
+	// for (it = _vec.begin(); it != _vec.end(); it++)
+	// 	std::cout << *it << std::endl;
 	algoVec();
 	_timeVec = elapsedTime(start);
 
 	start = timeStamp();
 	_list = store< std::list<int> >(arg);
+	// for (it = _list.begin(); it != _list.end(); it++)
+	// 	std::cout << *it << std::endl;
 	algoList();
 	_timeList = elapsedTime(start);
 
