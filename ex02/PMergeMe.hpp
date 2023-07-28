@@ -9,7 +9,9 @@
 #include <iomanip>
 
 #define CYAN "\033[36;1m"
+#define GREEN "\033[32m"
 #define CLEAR "\033[0m"
+#define TIME 1000000.0
 
 class PMergeMe {
 	private:
@@ -18,8 +20,8 @@ class PMergeMe {
 
 		std::string _before;
 		int _range;
-		float _timeList;
-		float _timeVec;
+		double _timeList;
+		double _timeVec;
 		bool _odd;
 		PMergeMe( void );
 

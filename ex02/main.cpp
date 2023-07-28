@@ -7,7 +7,7 @@ int main( int ac, char **av ) {
 			PMergeMe sorting(str);
 		}
 		else
-			std::cerr << "Error: Invalid number of arguments. Minimum 2 arguments." << std::endl;
+			std::cerr << "Error: Invalid number of arguments. Usage: ./PmergeMe <integer string>" << std::endl;
 	}
 	catch (std::exception &e) {
 		std::cout << "Error: " << e.what() << std::endl;
@@ -15,7 +15,3 @@ int main( int ac, char **av ) {
 
 	return 0;
 }
-
-//1. Parse input, check duplicates, check if positive digits.
-
-// I could make private variables to store range, time elapsed, before string and after string.
