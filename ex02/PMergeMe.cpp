@@ -387,5 +387,3 @@ PMergeMe::PMergeMe( std::string arg ) : _before(arg) {
 
 	printResults();
 }
-
-// std::cout << "\033[36;1mProblem here?\033[0m" << std::endl;
